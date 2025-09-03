@@ -11,29 +11,32 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 <body>
-    <!-- Sidebar Navigation -->
-    <nav class="sidebar">
-        <div class="sidebar-header">
-            <div class="profile-img">
-                <i class="fas fa-user"></i>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-text">VU LE ANH KHOI</span>
+                <span class="logo-subtitle">Backend Developer</span>
             </div>
-            <h2>VU LE ANH KHOI</h2>
-            <p>Sinh viên Backend Developer</p>
-        </div>
-        
-        <ul class="nav-menu">
-            <li><a href="#home" class="nav-link active"><i class="fas fa-home"></i> Trang chủ</a></li>
-            <li><a href="#about" class="nav-link"><i class="fas fa-user"></i> Giới thiệu</a></li>
-            <li><a href="#skills" class="nav-link"><i class="fas fa-code"></i> Kỹ năng</a></li>
-            <li><a href="#projects" class="nav-link"><i class="fas fa-briefcase"></i> Dự án</a></li>
-            <li><a href="#contact" class="nav-link"><i class="fas fa-envelope"></i> Liên hệ</a></li>
-        </ul>
-        
-        <div class="sidebar-footer">
-            <div class="social-links">
-                <a href="https://github.com/rena2302" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="mailto:khoivu2302@gmail.com"><i class="fas fa-envelope"></i></a>
-                <a href="tel:0587339074"><i class="fas fa-phone"></i></a>
+            
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active">Trang chủ</a></li>
+                <li><a href="#about" class="nav-link">Giới thiệu</a></li>
+                <li><a href="#skills" class="nav-link">Kỹ năng</a></li>
+                <li><a href="#projects" class="nav-link">Dự án</a></li>
+                <li><a href="#contact" class="nav-link">Liên hệ</a></li>
+            </ul>
+            
+            <div class="nav-social">
+                <a href="https://github.com/rena2302" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
+                <a href="mailto:khoivu2302@gmail.com" class="social-link"><i class="fas fa-envelope"></i></a>
+                <a href="tel:0587339074" class="social-link"><i class="fas fa-phone"></i></a>
+            </div>
+            
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
     </nav>
@@ -49,7 +52,7 @@
                             Xin chào! Tôi là
                         </h1>
                         <h1 class="hero-name">
-                            <span class="highlight">VU LE ANH KHOI</span>
+                            <span class="highlight gradient-text">VU LE ANH KHOI</span>
                         </h1>
                         <h2 class="hero-subtitle">Sinh viên Backend Developer</h2>
                         <p class="hero-description">
@@ -156,7 +159,7 @@
             <div class="container">
                 <h2 class="section-title">Kỹ năng</h2>
                 <div class="skills-container">
-                    <div class="skill-category">
+                    <div class="skill-category hover-lift">
                         <h3><i class="fas fa-code"></i> Ngôn ngữ lập trình</h3>
                         <div class="skills-grid">
                             <div class="skill-item">
@@ -189,7 +192,7 @@
                         </div>
                     </div>
 
-                    <div class="skill-category">
+                    <div class="skill-category hover-lift">
                         <h3><i class="fas fa-server"></i> Backend Technologies</h3>
                         <div class="skills-grid">
                             <div class="skill-item">
@@ -222,7 +225,7 @@
                         </div>
                     </div>
 
-                    <div class="skill-category">
+                    <div class="skill-category hover-lift">
                         <h3><i class="fas fa-database"></i> Database & Cloud</h3>
                         <div class="skills-grid">
                             <div class="skill-item">
@@ -263,7 +266,7 @@
             <div class="container">
                 <h2 class="section-title">Dự án nổi bật</h2>
                 <div class="projects-grid">
-                    <div class="project-card">
+                    <div class="project-card hover-lift">
                         <div class="project-header">
                             <div class="project-icon">
                                 <i class="fas fa-music"></i>
@@ -280,6 +283,7 @@
                         <div class="project-tech">
                             <span>Node.js</span>
                             <span>TypeScript</span>
+                            <span>Express.js</span>
                             <span>gRPC</span>
                             <span>Firebase</span>
                             <span>Docker</span>
@@ -291,7 +295,7 @@
                         </div>
                     </div>
 
-                    <div class="project-card">
+                    <div class="project-card hover-lift">
                         <div class="project-header">
                             <div class="project-icon">
                                 <i class="fas fa-graduation-cap"></i>
@@ -319,7 +323,7 @@
                         </div>
                     </div>
 
-                    <div class="project-card">
+                    <div class="project-card hover-lift">
                         <div class="project-header">
                             <div class="project-icon">
                                 <i class="fas fa-clock"></i>
@@ -359,22 +363,22 @@
                         <p>Tôi đang tìm kiếm cơ hội thực tập và việc làm fresher backend developer.</p>
                         
                         <div class="contact-cards">
-                            <div class="contact-card">
+                            <div class="contact-card hover-lift">
                                 <i class="fas fa-phone"></i>
                                 <h4>Điện thoại</h4>
                                 <p>0587339074</p>
                             </div>
-                            <div class="contact-card">
+                            <div class="contact-card hover-lift">
                                 <i class="fas fa-envelope"></i>
                                 <h4>Email</h4>
                                 <p>khoivu2302@gmail.com</p>
                             </div>
-                            <div class="contact-card">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <h4>Địa chỉ</h4>
-                                <p>TP. Hồ Chí Minh</p>
+                            <div class="contact-card hover-lift">
+                                <i class="fab fa-linkedin"></i>
+                                <h4>LinkedIn</h4>
+                                <a href="https://www.linkedin.com/in/v%C5%A9-l%C3%AA-anh-kh%C3%B4i-0964a5310/" target="_blank" class="contact-link">Vũ Lê Anh Khôi</a>
                             </div>
-                            <div class="contact-card">
+                            <div class="contact-card hover-lift">
                                 <i class="fab fa-github"></i>
                                 <h4>GitHub</h4>
                                 <p>github.com/rena2302</p>

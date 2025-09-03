@@ -1,20 +1,20 @@
 // Mobile Menu Toggle
-const mobileMenuToggle = document.createElement('button');
-mobileMenuToggle.className = 'mobile-menu-toggle';
-mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-document.body.appendChild(mobileMenuToggle);
+const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+const navMenu = document.querySelector('.nav-menu');
 
-const sidebar = document.querySelector('.sidebar');
+if (mobileMenuToggle) {
+    mobileMenuToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+        mobileMenuToggle.classList.toggle('active');
+    });
+}
 
-mobileMenuToggle.addEventListener('click', () => {
-    sidebar.classList.toggle('active');
-});
-
-// Close sidebar when clicking outside on mobile
+// Close mobile menu when clicking outside
 document.addEventListener('click', (e) => {
     if (window.innerWidth <= 1024) {
-        if (!sidebar.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
-            sidebar.classList.remove('active');
+        if (!navMenu.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+            navMenu.classList.remove('active');
+            mobileMenuToggle.classList.remove('active');
         }
     }
 });
@@ -27,23 +27,26 @@ navLinks.forEach(link => {
     link.addEventListener('click', (e) => {
         e.preventDefault();
         
-        // Remove active class from all links and sections
+        // Remove active class from all links
         navLinks.forEach(l => l.classList.remove('active'));
-        sections.forEach(s => s.classList.remove('active'));
         
         // Add active class to clicked link
         link.classList.add('active');
         
-        // Show corresponding section
+        // Scroll to corresponding section
         const targetId = link.getAttribute('href').substring(1);
         const targetSection = document.getElementById(targetId);
         if (targetSection) {
-            targetSection.classList.add('active');
+            targetSection.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
         }
         
-        // Close sidebar on mobile
+        // Close mobile menu
         if (window.innerWidth <= 1024) {
-            sidebar.classList.remove('active');
+            navMenu.classList.remove('active');
+            mobileMenuToggle.classList.remove('active');
         }
     });
 });
@@ -57,6 +60,35 @@ const animateSkillBars = () => {
     });
 };
 
+// Scroll animations and navigation highlighting
+const topNav = document.querySelector('.top-nav');
+
+// Add scroll effect to navigation
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 100) {
+        topNav.classList.add('scrolled');
+    } else {
+        topNav.classList.remove('scrolled');
+    }
+    
+    // Update active navigation link based on scroll position
+    let current = '';
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        const sectionHeight = section.clientHeight;
+        if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+            current = section.getAttribute('id');
+        }
+    });
+    
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+        }
+    });
+});
+
 // Intersection Observer for animations
 const observerOptions = {
     threshold: 0.1,
@@ -66,11 +98,16 @@ const observerOptions = {
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.classList.add('animate');
+            entry.target.classList.add('visible');
             
             // Animate skill bars when skills section is visible
             if (entry.target.id === 'skills') {
                 setTimeout(animateSkillBars, 500);
+            }
+            
+            // Animate counters when home section is visible
+            if (entry.target.id === 'home') {
+                setTimeout(animateCounters, 500);
             }
         }
     });
@@ -266,20 +303,7 @@ const animateCounters = () => {
     });
 };
 
-// Trigger counter animation when home section is visible
-const homeSection = document.querySelector('#home');
-const homeObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            setTimeout(animateCounters, 500);
-            homeObserver.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.5 });
 
-if (homeSection) {
-    homeObserver.observe(homeSection);
-}
 
 // Add loading animation
 window.addEventListener('load', () => {
@@ -317,6 +341,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // Handle window resize
 window.addEventListener('resize', () => {
     if (window.innerWidth > 1024) {
-        sidebar.classList.remove('active');
+        navMenu.classList.remove('active');
+        mobileMenuToggle.classList.remove('active');
     }
 });
