@@ -81,17 +81,23 @@ sections.forEach(section => {
     observer.observe(section);
 });
 
-// Contact form handling
-const contactForm = document.querySelector('.contact-form form');
+// Initialize EmailJS
+(function() {
+    emailjs.init("FABac-QiCgd1MPTV7"); // Thay YOUR_PUBLIC_KEY bằng Public Key của bạn
+})();
+
+// Contact form handling with EmailJS
+const contactForm = document.getElementById('contact-form');
 if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
         
         // Get form data
-        const name = contactForm.querySelector('input[type="text"]').value;
-        const email = contactForm.querySelector('input[type="email"]').value;
-        const subject = contactForm.querySelectorAll('input[type="text"]')[1].value;
-        const message = contactForm.querySelector('textarea').value;
+        const formData = new FormData(contactForm);
+        const name = formData.get('from_name');
+        const email = formData.get('from_email');
+        const subject = formData.get('subject');
+        const message = formData.get('message');
 
         // Simple validation
         if (!name || !email || !subject || !message) {
@@ -106,18 +112,36 @@ if (contactForm) {
             return;
         }
 
-        // Simulate form submission
+        // Show loading state
         const submitBtn = contactForm.querySelector('button[type="submit"]');
         const originalText = submitBtn.textContent;
         submitBtn.textContent = 'Đang gửi...';
         submitBtn.disabled = true;
 
-        setTimeout(() => {
-            alert('Cảm ơn bạn đã liên hệ! Tôi sẽ phản hồi sớm nhất có thể.');
-            contactForm.reset();
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-        }, 2000);
+        // EmailJS template parameters
+        const templateParams = {
+            from_name: name,
+            from_email: email,
+            subject: subject,
+            message: message,
+            to_email: 'khoivu2302@gmail.com' // Email của bạn
+        };
+
+        // Send email using EmailJS
+        emailjs.send('service_p9h7yz4', 'template_j87uc5z', templateParams)
+            .then(function(response) {
+                console.log('SUCCESS!', response.status, response.text);
+                alert('Cảm ơn bạn đã liên hệ! Tôi sẽ phản hồi sớm nhất có thể.');
+                contactForm.reset();
+            }, function(error) {
+                console.log('FAILED...', error);
+                alert('Có lỗi xảy ra khi gửi tin nhắn. Vui lòng thử lại sau.');
+            })
+            .finally(function() {
+                // Reset button state
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            });
     });
 }
 
