@@ -19,6 +19,28 @@ document.addEventListener('click', (e) => {
     }
 });
 
+// Smooth scroll function with easing
+const smoothScrollTo = (target, duration = 1000) => {
+    const targetPosition = target.offsetTop - 80; // Offset for fixed navigation
+    const startPosition = window.pageYOffset;
+    const distance = targetPosition - startPosition;
+    let startTime = null;
+
+    const easeInOutCubic = (t) => {
+        return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+    };
+
+    const animation = (currentTime) => {
+        if (startTime === null) startTime = currentTime;
+        const timeElapsed = currentTime - startTime;
+        const run = easeInOutCubic(timeElapsed / duration);
+        window.scrollTo(0, startPosition + distance * run);
+        if (timeElapsed < duration) requestAnimationFrame(animation);
+    };
+
+    requestAnimationFrame(animation);
+};
+
 // Navigation
 const navLinks = document.querySelectorAll('.nav-link');
 const sections = document.querySelectorAll('.section');
@@ -33,14 +55,11 @@ navLinks.forEach(link => {
         // Add active class to clicked link
         link.classList.add('active');
         
-        // Scroll to corresponding section
+        // Smooth scroll to corresponding section
         const targetId = link.getAttribute('href').substring(1);
         const targetSection = document.getElementById(targetId);
         if (targetSection) {
-            targetSection.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
+            smoothScrollTo(targetSection, 1200); // 1.2 seconds duration
         }
         
         // Close mobile menu
@@ -62,14 +81,21 @@ const animateSkillBars = () => {
 
 // Scroll animations and navigation highlighting
 const topNav = document.querySelector('.top-nav');
+const scrollIndicator = document.querySelector('.scroll-indicator');
 
-// Add scroll effect to navigation
+// Add scroll effect to navigation and scroll indicator
 window.addEventListener('scroll', () => {
     if (window.scrollY > 100) {
         topNav.classList.add('scrolled');
     } else {
         topNav.classList.remove('scrolled');
     }
+    
+    // Update scroll indicator
+    const scrollTop = window.pageYOffset;
+    const docHeight = document.body.offsetHeight - window.innerHeight;
+    const scrollPercent = (scrollTop / docHeight) * 100;
+    scrollIndicator.style.setProperty('--scroll-width', scrollPercent + '%');
     
     // Update active navigation link based on scroll position
     let current = '';
@@ -229,6 +255,18 @@ document.querySelectorAll('.btn').forEach(btn => {
     });
 });
 
+// Add smooth scroll effect to all navigation buttons
+document.querySelectorAll('.btn[href^="#"]').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        const targetSection = document.getElementById(targetId);
+        if (targetSection) {
+            smoothScrollTo(targetSection, 1200);
+        }
+    });
+});
+
 // Add CSS for ripple effect
 const style = document.createElement('style');
 style.textContent = `
@@ -337,16 +375,13 @@ loadingStyle.textContent = `
 `;
 document.head.appendChild(loadingStyle);
 
-// Smooth scrolling for anchor links
+// Smooth scrolling for all anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
+            smoothScrollTo(target, 1200);
         }
     });
 });
