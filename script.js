@@ -155,13 +155,26 @@ if (contactForm) {
         submitBtn.textContent = 'Đang gửi...';
         submitBtn.disabled = true;
 
+        // Get current time
+        const now = new Date();
+        const timestamp = now.toLocaleString('vi-VN', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            timeZone: 'Asia/Ho_Chi_Minh'
+        });
+
         // EmailJS template parameters
         const templateParams = {
             from_name: name,
             from_email: email,
             subject: subject,
             message: message,
-            to_email: 'khoivu2302@gmail.com' // Email của bạn
+            to_email: 'khoivu2302@gmail.com', // Email của bạn
+            time: timestamp
         };
 
         // Send email using EmailJS
